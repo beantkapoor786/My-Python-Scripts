@@ -1,5 +1,6 @@
 """
 This script takes a vcf file produced by Sniffles and outputs a table for a count of types of SVs per chromosome.
+Caveat - Vcf file should only have SVs called in chromosomes. Please remove any scaffold calls prior to using this script.
 Usage: python SVs_per_chr.py <vcf> <output>
 """
 
@@ -12,7 +13,7 @@ stats = sys.argv[2]
 df = pd.read_csv(vcf, comment = "#", sep = "\t", header = None).dropna(how = "all")
 
 # extract chromosome and SV type column in a separate dataframe
-chr_sv = df.iloc[:, [0,2]]
+chr_sv = df.iloc[:, [0,2]].copy()
 
 # give column names
 chr_sv.columns = ["chr", "type"]
